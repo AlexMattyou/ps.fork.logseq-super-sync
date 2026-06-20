@@ -82,15 +82,13 @@ export class BackupService {
       }
     }
 
-    // Initialize new providers
+    // Initialize new providers and update existing ones
     for (const providerName of currentProviders) {
-      if (!previousProviders.includes(providerName)) {
-        try {
-          console.info(`Initializing new provider: ${providerName}`);
-          await this.initializeProvider(providerName);
-        } catch (error) {
-          console.error(`Failed to initialize ${providerName} provider:`, error);
-        }
+      try {
+        console.info(`Initializing/Updating provider: ${providerName}`);
+        await this.initializeProvider(providerName);
+      } catch (error) {
+        console.error(`Failed to initialize ${providerName} provider:`, error);
       }
     }
   }

@@ -58,17 +58,15 @@ export class SyncService {
           this.providers.delete(providerName);
         }
       }
+    }
 
-      // Add newly enabled providers
-      for (const providerName of currentProviders) {
-        if (!previousProviders.includes(providerName) && !this.providers.has(providerName)) {
-          const provider = ProviderRegistry.createProvider(providerName);
-          if (provider) {
-            const success = await provider.initialize(this.settings);
-            if (success) {
-              this.providers.set(providerName, provider);
-            }
-          }
+    // Add newly enabled providers and update existing ones
+    for (const providerName of currentProviders) {
+      const provider = ProviderRegistry.createProvider(providerName);
+      if (provider) {
+        const success = await provider.initialize(this.settings);
+        if (success) {
+          this.providers.set(providerName, provider);
         }
       }
     }
